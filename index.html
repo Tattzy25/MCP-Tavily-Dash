@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP-Tavily Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <h1 class="header-title">MCP-Tavily Dashboard</h1>
+        </div>
+        <div class="header-right">
+            <div class="status-indicator">
+                <span class="status-dot" id="statusDot"></span>
+                <span class="status-text" id="statusText">Connecting...</span>
+            </div>
+            <div class="last-update" id="lastUpdate">--</div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="nav">
+            <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="#health" class="nav-item" data-section="health">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+                <span>Health Status</span>
+            </a>
+            <a href="#connections" class="nav-item" data-section="connections">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Connections</span>
+            </a>
+            <a href="#tools" class="nav-item" data-section="tools">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                </svg>
+                <span>Tools</span>
+            </a>
+            <a href="#logs" class="nav-item" data-section="logs">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>Logs</span>
+            </a>
+            <a href="#settings" class="nav-item" data-section="settings">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v6m0 6v6m8.66-13.66l-4.24 4.24M7.58 16.42l-4.24 4.24M1 12h6m6 0h6M4.34 19.66l4.24-4.24m8.48-8.48l4.24-4.24"></path>
+                </svg>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section class="section active" id="dashboard-section">
+            <div class="section-header">
+                <h2>Dashboard Overview</h2>
+                <button class="btn btn-secondary" id="refreshDashboard">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
+                    Refresh
+                </button>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: var(--color-bg-1);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Server Status</div>
+                        <div class="metric-value" id="metricServerStatus">--</div>
+                        <div class="metric-subtext" id="metricUptime">--</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: var(--color-bg-2);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Total Connections</div>
+                        <div class="metric-value" id="metricTotalConnections">--</div>
+                        <div class="metric-subtext"><span id="metricActiveConnections">--</span> active now</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: var(--color-bg-3);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Total Requests</div>
+                        <div class="metric-value" id="metricTotalRequests">--</div>
+                        <div class="metric-subtext">
+                            <span style="color: var(--color-success);" id="metricSuccessRequests">--</span> / 
+                            <span style="color: var(--color-error);" id="metricFailedRequests">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: var(--color-bg-4);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Avg Response Time</div>
+                        <div class="metric-value" id="metricAvgResponse">--</div>
+                        <div class="metric-subtext">milliseconds</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: var(--color-bg-5);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                        </svg>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Tools Available</div>
+                        <div class="metric-value" id="metricToolsAvailable">--</div>
+                        <div class="metric-subtext">MCP tools ready</div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: var(--color-bg-6);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Redis Status</div>
+                        <div class="metric-value" id="metricRedisStatus">--</div>
+                        <div class="metric-subtext"><span id="metricRedisLatency">--</span> latency</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Request Success Rate</h3>
+                    <div class="chart-container">
+                        <canvas id="successRateChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Response Times</h3>
+                    <div class="chart-container">
+                        <canvas id="responseTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Health Status Section -->
+        <section class="section" id="health-section">
+            <div class="section-header">
+                <h2>Health Status</h2>
+                <button class="btn btn-secondary" id="refreshHealth">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
+                    Check Health
+                </button>
+            </div>
+
+            <div class="health-grid">
+                <div class="health-card">
+                    <div class="health-header">
+                        <h3>Server Health</h3>
+                        <span class="status" id="healthServerStatus">--</span>
+                    </div>
+                    <div class="health-details">
+                        <div class="health-item">
+                            <span class="health-label">Uptime:</span>
+                            <span class="health-value" id="healthUptime">--</span>
+                        </div>
+                        <div class="health-item">
+                            <span class="health-label">Last Checked:</span>
+                            <span class="health-value" id="healthLastChecked">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="health-card">
+                    <div class="health-header">
+                        <h3>Redis Connection</h3>
+                        <span class="status" id="healthRedisStatus">--</span>
+                    </div>
+                    <div class="health-details">
+                        <div class="health-item">
+                            <span class="health-label">Latency:</span>
+                            <span class="health-value" id="healthRedisLatency">--</span>
+                        </div>
+                        <div class="health-item">
+                            <span class="health-label">Status:</span>
+                            <span class="health-value" id="healthRedisConnection">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="health-card">
+                    <div class="health-header">
+                        <h3>API Endpoint</h3>
+                        <span class="status" id="healthApiStatus">--</span>
+                    </div>
+                    <div class="health-details">
+                        <div class="health-item">
+                            <span class="health-label">Response Time:</span>
+                            <span class="health-value" id="healthApiResponseTime">--</span>
+                        </div>
+                        <div class="health-item">
+                            <span class="health-label">Endpoint:</span>
+                            <span class="health-value" id="healthApiEndpoint">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connections Section -->
+        <section class="section" id="connections-section">
+            <div class="section-header">
+                <h2>Connections</h2>
+                <div class="filter-controls">
+                    <select class="form-control" id="connectionFilter">
+                        <option value="all">All Connections</option>
+                        <option value="connected">Connected</option>
+                        <option value="disconnected">Disconnected</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Connection ID</th>
+                            <th>Connected At</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                            <th>Tools Used</th>
+                        </tr>
+                    </thead>
+                    <tbody id="connectionsTableBody">
+                        <tr>
+                            <td colspan="5" class="text-center">Loading connections...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="section" id="tools-section">
+            <div class="section-header">
+                <h2>MCP Tools</h2>
+                <div class="filter-controls">
+                    <select class="form-control" id="toolsSortBy">
+                        <option value="calls">Sort by Calls</option>
+                        <option value="name">Sort by Name</option>
+                        <option value="success">Sort by Success Rate</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="tools-grid" id="toolsGrid">
+                <div class="tool-card loading">
+                    <p>Loading tools...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Logs Section -->
+        <section class="section" id="logs-section">
+            <div class="section-header">
+                <h2>Server Logs</h2>
+                <div class="log-controls">
+                    <input type="text" class="form-control" id="logSearch" placeholder="Search logs...">
+                    <select class="form-control" id="logLevelFilter">
+                        <option value="all">All Levels</option>
+                        <option value="INFO">INFO</option>
+                        <option value="WARNING">WARNING</option>
+                        <option value="ERROR">ERROR</option>
+                    </select>
+                    <label class="toggle-label">
+                        <input type="checkbox" id="autoScrollLogs" checked>
+                        <span>Auto-scroll</span>
+                    </label>
+                    <button class="btn btn-secondary" id="clearLogs">
+                        Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="logs-container" id="logsContainer">
+                <div class="log-entry log-info">
+                    <span class="log-time">--:--:--</span>
+                    <span class="log-level">INFO</span>
+                    <span class="log-message">Waiting for logs...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section class="section" id="settings-section">
+            <div class="section-header">
+                <h2>Settings</h2>
+            </div>
+
+            <div class="settings-container">
+                <div class="settings-card">
+                    <h3>API Configuration</h3>
+                    <div class="form-group">
+                        <label class="form-label">API Endpoint URL</label>
+                        <input type="text" class="form-control" id="apiEndpointInput" placeholder="http://localhost:8000">
+                    </div>
+                    <button class="btn btn-primary" id="testConnection">
+                        Test Connection
+                    </button>
+                    <div class="test-result" id="testResult"></div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Update Settings</h3>
+                    <div class="form-group">
+                        <label class="form-label">Refresh Rate</label>
+                        <select class="form-control" id="refreshRateSelect">
+                            <option value="1000">1 second</option>
+                            <option value="5000" selected>5 seconds</option>
+                            <option value="10000">10 seconds</option>
+                            <option value="30000">30 seconds</option>
+                        </select>
+                    </div>
+                    <label class="toggle-label">
+                        <input type="checkbox" id="autoRefreshToggle" checked>
+                        <span>Auto-refresh enabled</span>
+                    </label>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Appearance</h3>
+                    <div class="form-group">
+                        <label class="form-label">Theme</label>
+                        <select class="form-control" id="themeSelect">
+                            <option value="auto">Auto (System)</option>
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Demo Mode</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" id="demoModeToggle" checked>
+                        <span>Use mock data when API unavailable</span>
+                    </label>
+                    <p class="settings-help">When enabled, the dashboard will display mock data if the API connection fails.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
